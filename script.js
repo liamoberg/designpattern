@@ -1,4 +1,3 @@
-// I've used the module pattern with object literals simply because I think it is easy to use and the code gets very structured.
 // I used the constructor pattern for my objects and it's the same there, a smooth and easy way to create objects.
 
 const movieDataBase = {
@@ -29,7 +28,7 @@ const movieDataBase = {
 
     // Function that takes 2 parameters, the movie you want to rate and the rating
     rateMovie: function(movie, rating){
-        const movies = this.movies;
+        let movies = this.movies;
         // loop that checks all movies and if the name you put in the parameter matches with a name of a movie,
         // pushes the rating that you put in the parameter.
         for (let i = 0; i < movies.length; i++){
@@ -65,7 +64,7 @@ const movieDataBase = {
     getWithAverageRating: function(){
         this.movies
         .forEach(movie => {
-            const sum = movie.ratings.reduce((a,b) =>{
+            let sum = movie.ratings.reduce((a,b) =>{
                 return a + b;
             },0)
             movie.averageRatings = sum / movie.ratings.length;
@@ -76,7 +75,7 @@ const movieDataBase = {
 
     // function that checks all the averageratings of the movies and returns the one with worst rating.
     getWorstRating: function(){
-        const movies = this.getWithAverageRating();
+        let movies = this.getWithAverageRating();
         return movies.reduce(function(previousValue, value){
             return previousValue.averageRatings < value.averageRatings ? previousValue : value; 
         })
@@ -84,7 +83,7 @@ const movieDataBase = {
     
     // same as above but the highest rated.
     getHighestRating: function(){
-        const movies = this.getWithAverageRating();
+        let movies = this.getWithAverageRating();
         return movies.reduce(function(previousValue, value){
             return previousValue.averageRatings > value.averageRatings ? previousValue : value; 
         })
@@ -99,8 +98,8 @@ const functionBase = {
     // function that loops through all the movies in the database and adds them into the string variabel movies.
     // after that I change the innerHTML of the div showMovies to the var movies.
     displayAllMovies: function(){
-        const movie = movieDataBase.movies;
-        var movies = '';
+        let movie = movieDataBase.movies;
+        let movies = '';
             for (let i = 0; i < movie.length; i++){
                 movies += `Title: ${movie[i].name} Release: ${movie[i].year} Genre: ${movie[i].genre} Ratings: ${movie[i].ratings}<br>`;
             }   
@@ -115,24 +114,17 @@ const functionBase = {
     // function that saves the return of the function getWorstRating into a const that is calle movie.
     // Then changes the innerHTML to the const movies different attributes
     showWorstRatedMovie: function(){
-        const movie = movieDataBase.getWorstRating();
+        let movie = movieDataBase.getWorstRating();
             document.getElementById('showMovies').innerHTML = `Title: ${movie.name} Release: ${movie.year} Genre: ${movie.genre} Averagerating: ${movie.averageRatings}`; 
     },
 
     // same as above but the highestrated
     showHighestRatedMovie: function(){
-        const movie = movieDataBase.getHighestRating();
+        let movie = movieDataBase.getHighestRating();
             document.getElementById('showMovies').innerHTML = `Title: ${movie.name} Release: ${movie.year} Genre: ${movie.genre} Averagerating: ${movie.averageRatings}`; 
     }
 };
 
-
-movieDataBase.pushMovie();
-movieDataBase.rateMovie('Batman begins', 4);
-console.log(movieDataBase.getMovieByGenre(['Tilt', 'Drama']));
-console.log(movieDataBase.getMoviesThisYear(2005));
-console.log(movieDataBase.getWorstRating());
-console.log(movieDataBase.getHighestRating());
 
 // all my buttons in one namespace with the eventlisteners etc
 const eventSpace = {
@@ -153,10 +145,20 @@ const eventSpace = {
 };
 
 
-
-eventSpace.displayAll();
-eventSpace.displayWorst();
-eventSpace.displayBest();
+window.onload = function(){
+    eventSpace.displayAll();
+    eventSpace.displayWorst();
+    eventSpace.displayBest();
+    movieDataBase.pushMovie();
+    movieDataBase.rateMovie('Batman begins', 4);    
+    console.log(movieDataBase.getMovieByGenre(['Tilt', 'Drama']));
+    console.log(movieDataBase.getMoviesThisYear(2005));
+    console.log(movieDataBase.getWorstRating());
+    console.log(movieDataBase.getHighestRating());
+};
+// eventSpace.displayAll();
+// eventSpace.displayWorst();
+// eventSpace.displayBest();
 
 
 
