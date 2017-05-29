@@ -1,1 +1,5 @@
-https://github.com/mrlangboi/designpattern
+#Designpattern
+
+Javascript exercise
+
+[Designpattern](https://liamoberg.github.io/designpattern/)
